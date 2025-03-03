@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwollenHippo</title>
+  <!-- BOOTSWATCH THEME: PULSE -->
+  <link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/pulse/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-dark">
+  <div class="d-flex justify-content-center align-items-center">
+    <!-- LOGIN CARD -->
+    <form class="card col-12 col-md-5 col-lg-4" id="frmLogin">
+      <div class="card-body">
+        <h1 class="text-center mb-0 text-primary">SwollenHippo</h1>
+        <h3 class="text-center mt-3 mb-0 text-dark">Electronic Medical Records Form</h3>
+        <div class="d-flex justify-content-center">
+          <!-- IMAGE -->
+          <img src="./images/login-image.svg" alt="computer monitor image" style="max-width: 80%;" class="mt-2 mb-2">
+        </div>
+        <!-- LOGIN DETAILS -->
+        <h4 class="text-center mb-0 text-dark">Account Login</h4>
+        <input id="txtEmailLogin" class="form-control mt-4" type="email" placeholder="Email" aria-label="email input">
+        <input id="txtPasswordLogin" class="form-control mt-2" type="password" placeholder="Password" aria-label="password input">
+        <button class="btn btn-primary col-12 mt-4" type="button" id="btnLogin">Log In</button>
+        <button class="btn btn-link col-12 mt-4" type="button" id="btnSwapLogin">Need an account? Create one here</button>
+      </div>
+    </form>
+    <!-- REGISTER CARD -->
+    <form class="card col-12 col-md-5 col-lg-4" id="frmRegister" style="display: none;">
+      <div class="card-body">
+        <h1 class="text-center mb-0 text-primary">SwollenHippo</h1>
+        <h3 class="text-center mt-3 mb-0 text-dark">Electronic Medical Records Form</h3>
+        <div class="d-flex justify-content-center">
+          <!-- IMAGE -->
+          <img src="./images/register-image.svg" alt="computer monitor image" style="max-width: 80%;" class="mt-2 mb-2">
+        </div>
+        <!-- REGISTER DETAILS -->
+        <h4 class="text-center mb-4 text-dark">Create Account</h4>
+        <h5 class=" text-dark">Account Information</h5>
+        <input id="txtEmailRegister" class="form-control mt-2" type="email" placeholder="Email" aria-label="email input required">
+        <input id="txtPasswordRegister" class="form-control mt-2" type="password" placeholder="Password" aria-label="password input required">
+        <input id="txtPasswordConfirm" class="form-control mt-2" type="password" placeholder="Confirm Password" aria-label="confirm password input required">
+        <p class="mt-2 text-secondary">Requirements: at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, and no special characters</p>
+        <h5 class="mt-4 text-dark">Personal Information</h5>
+        <input id="txtFirstName" class="form-control mt-2" placeholder="First Name" aria-label="first name input required">
+        <input id="txtMiddleName" class="form-control mt-2" placeholder="Middle Name" aria-label="middle name input">
+        <input id="txtLastName" class="form-control mt-2" placeholder="Last Name" aria-label="last name input required">
+        <h5 class="mt-4 text-dark">Contact Information</h5>
+        <input id="txtAddress1" class="form-control mt-2" placeholder="Street Address 1" aria-label="street address 1 input required">
+        <input id="txtAddress2" class="form-control mt-2" placeholder="Street Address 2" aria-label="street address 2 input required">
+        <input id="txtCity" class="form-control mt-2" placeholder="City" aria-label="city input required">
+        <input id="txtState" class="form-control mt-2" placeholder="State" aria-label="state input required">
+        <input id="txtZip" class="form-control mt-2" type="number" placeholder="Zip" aria-label="zip input required">
+        <input id="txtPhone" class="form-control mt-2 mb-4" pattern="\(\d{3}\) \d{3}-\d{4}" type="tel" placeholder="Phone" aria-label="phone input required">
+        <button class="btn btn-primary col-12 mt-4" type="button" id="btnRegister">Register</button>
+        <button class="btn btn-link col-12 mt-4" type="button" id="btnSwapRegister">Already have an account? Sign in</button>
+      </div>
+    </form>
+  </div>
+  <!-- BOOTSTRAP -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <!-- JQUEURY -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <!-- SWEET ALERTS -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- CUSTOM JS -->
+  <script src="js/app.js"></script>
+</body>
+
+</html>
