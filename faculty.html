@@ -1,0 +1,232 @@
+<!-- add the following to user settings JSON in Visual Studio Code -->
+<!-- 
+     "liveServer.settings.ignoreFiles": [
+       "**/backend/data/*",
+     ],
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- set character encoding and mobile responsiveness -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:,">
+
+  <!-- PAGE TITLE -->
+  <title>To-Do List</title>
+
+  <!-- CSS STYLESHEETS -->
+  <link rel="stylesheet" href="css/lib/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/lib/sweetalert2.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- JS SCRIPTS -->
+  <!-- <script src="js/lib/jquery-3.7.1.min.js"></script> -->
+  <script src="js/lib/bootstrap.bundle.min.js"></script>
+  <script src="js/lib/sweetalert2.all.min.js"></script>
+  <!-- <script src="js/lib/chart.min.js"></script> -->
+
+  <!-- CDNS -->
+  <!-- <script src="https://unpkg.com/@tailwindcss/browser@4"></script> -->
+</head>
+
+<body>
+
+  <!-- MAIN CONTAINER -->
+  <div class="container py-4">
+
+    <!-- LOGO IMAGE -->
+    <!-- <div class="d-flex justify-content-center align-items-center">
+      <img src="./img/computer-svgrepo.svg" alt="computer monitor image" style="max-width: 10%;" class="mt-2 mb-2">
+    </div> -->
+
+    <!-- PAGE HEADER -->
+    <h2 class="text-center mb-3">📝 To-Do List</h2>
+
+    <!-- NEW TASK FORM -->
+    <div class="card shadow mb-3">
+      <div class="card-header bg-success text-white">
+        <strong>New Task</strong>
+      </div>
+      <div class="card-body">
+        <!-- add task inputs (Bootstrap-styled, with aria-labels) -->
+        <form id="formAddTask" onsubmit="return true">
+          <!-- ROW -->
+          <!-- GAP -->
+          <div class="row g-2 mb-2">
+            <div class="col-md-6">
+              <!-- input for task name -->
+              <input id="txtTaskName" type="text" class="form-control" placeholder="Task Name" required aria-label="input task name" />
+            </div>
+            <div class="col-md-6">
+              <!-- input for task description -->
+              <input id="txtTaskDescription" type="text" class="form-control" placeholder="Description" aria-label="input task description" />
+            </div>
+          </div>
+          <div class="row g-2 mb-2">
+            <div class="col-md-3">
+              <!-- input for due date -->
+              <input id="dtTaskDueDate" type="date" class="form-control" required aria-label="input due date" />
+            </div>
+            <div class="col-md-3">
+              <!-- input for location -->
+              <input id="txtTaskLocation" type="text" class="form-control" placeholder="Location" aria-label="input task location" />
+            </div>
+            <div class="col-md-2">
+              <!-- input for priority -->
+              <!-- COMBO BOXES -->
+              <select id="txtTaskPriority" class="form-control" aria-label="select task priority">
+                <option value="Low" selected hidden>Choose priority</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <!-- input for status -->
+              <select id="txtTaskStatus" class="form-control" aria-label="select task status" required>
+                <option value="" selected disabled hidden>Choose status</option>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="Scheduled">Scheduled</option>
+              </select>
+
+            </div>
+            <div class="col-md-2">
+              <!-- submit button -->
+              <button type="submit" id="btnAddTask" class="btn btn-success w-100">Add Task</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TO-DO TASK TABLE -->
+    <div class="card shadow">
+      <div class="card-header bg-primary text-white">
+        <strong>Tasks</strong>
+      </div>
+
+      <div class="card-body">
+        <!-- search box -->
+        <input type="text" id="txtSearchTask" class="form-control mb-3" placeholder="Search task, description, or location..." aria-label="search tasks" />
+        <div class="table-responsive">
+          <table class="table table-bordered" id="taskTable">
+            <thead class="thead-dark">
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Due</th>
+                <th>Priority</th>
+                <th>Location</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="taskList">
+              <!-- populated by JS -->
+            </tbody>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // fetch all tasks from backend
+    function fetchTasks() {
+      fetch('http://127.0.0.1:8000/tasks')
+        .then(res => res.json())
+        .then(data => {
+          const taskList = document.getElementById('taskList');
+          taskList.innerHTML = '';
+
+          // add each task to table
+          data.tasks.forEach(task => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${task.Name}</td>
+              <td>${task.Description}</td>
+              <td>${task.DueDate}</td>
+              <td>${task.Priority}</td>
+              <td>${task.Location}</td>
+              <td>${task.Status}</td>
+            `;
+            taskList.appendChild(row);
+          });
+        })
+        .catch(err => console.error('error fetching to-do tasks:', err));
+    }
+
+    // handle form submission
+    document.getElementById('formAddTask').addEventListener('submit', function (e) {
+      // SELECT BUTTON INSTEAD OF SUBMIT EXAMPLE
+      // document.querySelector('#btnAddTask').addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('form submitted'); // does this log?
+
+      // collect input values
+      const newTask = {
+        ID: Date.now().toString(),
+        Name: document.getElementById('txtTaskName').value,
+        Description: document.getElementById('txtTaskDescription').value,
+        DueDate: document.getElementById('dtTaskDueDate').value,
+        Priority: document.getElementById('txtTaskPriority').value,
+        Location: document.getElementById('txtTaskLocation').value,
+        Status: document.getElementById('txtTaskStatus').value
+      };
+
+      // send new task to backend
+      fetch('http://127.0.0.1:8000/tasks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newTask)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'success') {
+            // show success popup using SweetAlert2
+            Swal.fire({
+              icon: 'success',
+              title: 'Task added!',
+              text: 'Your task has been successfully added.',
+            });
+            document.getElementById('formAddTask').reset();
+            fetchTasks();
+          } else {
+            // show error popup using SweetAlert2
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'There was a problem adding the task.',
+            });
+          }
+
+        });
+    });
+
+    // filter tasks by search input
+    document.getElementById('txtSearchTask').addEventListener('input', function () {
+      const query = this.value.toLowerCase();
+      const rows = document.querySelectorAll('#taskList tr');
+
+      rows.forEach(row => {
+        const name = row.children[0].textContent.toLowerCase();
+        const description = row.children[1].textContent.toLowerCase();
+        const location = row.children[4].textContent.toLowerCase();
+
+        const match = name.includes(query) || description.includes(query) || location.includes(query);
+        row.style.display = match ? '' : 'none';
+      });
+    });
+
+    // load initial tasks
+    document.addEventListener('DOMContentLoaded', fetchTasks);
+  </script>
+
+</body>
+
+</html>
