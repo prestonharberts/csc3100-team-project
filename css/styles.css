@@ -1,3 +1,8 @@
 .form-control {
   color: var(--bs-secondary-color);
 }
+
+.card-header:has(button.collapsed) {
+  /* your styles here */
+  border-radius: var(--bs-card-inner-border-radius);
+}
