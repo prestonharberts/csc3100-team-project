@@ -14,7 +14,7 @@
   <link rel="icon" href="data:,">
 
   <!-- PAGE TITLE -->
-  <title>To-Do List</title>
+  <title>Student App</title>
 
   <!-- CSS STYLESHEETS -->
   <link rel="stylesheet" href="css/lib/bootstrap.min.css" />
@@ -42,61 +42,66 @@
     </div> -->
 
     <!-- PAGE HEADER -->
-    <h2 class="text-center mb-3">📝 To-Do List</h2>
+    <h2 class="text-center">📝 RateMyTeam</h2>
+    <h4 class="text-center mb-3">Student Form</h4>
 
-    <!-- NEW TASK FORM -->
+    <!-- Join Group FORM -->
     <div class="card shadow mb-3">
       <div class="card-header bg-success text-white">
-        <strong>New Task</strong>
+        <strong>Join Group</strong>
       </div>
       <div class="card-body">
         <!-- add task inputs (Bootstrap-styled, with aria-labels) -->
-        <form id="formAddTask" onsubmit="return true">
+        <form id="formEnterGroup" onsubmit="return true">
           <!-- ROW -->
           <!-- GAP -->
           <div class="row g-2 mb-2">
             <div class="col-md-6">
-              <!-- input for task name -->
-              <input id="txtTaskName" type="text" class="form-control" placeholder="Task Name" required aria-label="input task name" />
-            </div>
-            <div class="col-md-6">
-              <!-- input for task description -->
-              <input id="txtTaskDescription" type="text" class="form-control" placeholder="Description" aria-label="input task description" />
-            </div>
-          </div>
-          <div class="row g-2 mb-2">
-            <div class="col-md-3">
-              <!-- input for due date -->
-              <input id="dtTaskDueDate" type="date" class="form-control" required aria-label="input due date" />
-            </div>
-            <div class="col-md-3">
-              <!-- input for location -->
-              <input id="txtTaskLocation" type="text" class="form-control" placeholder="Location" aria-label="input task location" />
-            </div>
-            <div class="col-md-2">
-              <!-- input for priority -->
-              <!-- COMBO BOXES -->
-              <select id="txtTaskPriority" class="form-control" aria-label="select task priority">
-                <option value="Low" selected hidden>Choose priority</option>
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-              </select>
-            </div>
-            <div class="col-md-2">
-              <!-- input for status -->
-              <select id="txtTaskStatus" class="form-control" aria-label="select task status" required>
-                <option value="" selected disabled hidden>Choose status</option>
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-                <option value="Scheduled">Scheduled</option>
-              </select>
-
+              <!-- input for group key -->
+              <input id="txtGroupKey" type="text" class="form-control" placeholder="Group Key" required aria-label="input group key" />
             </div>
             <div class="col-md-2">
               <!-- submit button -->
-              <button type="submit" id="btnAddTask" class="btn btn-success w-100">Add Task</button>
+              <button type="submit" id="btnEnterGroup" class="btn btn-success w-100">Join Group</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- NEW Survey FORM -->
+    <div class="card shadow mb-3">
+      <div class="card-header bg-success text-white">
+        <strong>Incoming Survey</strong>
+      </div>
+      <div class="card-body">
+        <!-- add form inputs (Bootstrap-styled, with aria-labels) -->
+        <form id="formAddReview" onsubmit="return true">
+          <!-- ROW -->
+          <!-- GAP -->
+          <div class="row g-2 mb-2">
+            <div class="col-md-3">
+              <!-- input for student name -->
+              <input id="txtStudentName" type="text" class="form-control" placeholder="Student Name" required aria-label="input student name" />
+            </div>
+            <div class="col-md-3">
+              <!-- input for visibility -->
+              <!-- COMBO BOXES -->
+              <select id="txtReviewVisibility" class="form-control" aria-label="select review visibility">
+                <option value="" selected hidden>Choose Visibility</option>
+                <option value="Public">Public</option>
+                <option value="Private">Private</option>
+              </select>
+            </div>
+          </div>
+          <div class="row g-2 mb-2">
+            <div class="col-md-10">
+              <!-- input for student review -->
+              <input id="txtStudentReview" type="text" class="form-control" placeholder="Enter Review" aria-label="input student review" />
+            </div>
+            <div class="col-md-2">
+              <!-- submit button -->
+              <button type="submit" id="btnAddReview" class="btn btn-success w-100">Submit Review</button>
             </div>
           </div>
         </form>
@@ -106,22 +111,20 @@
     <!-- TO-DO TASK TABLE -->
     <div class="card shadow">
       <div class="card-header bg-primary text-white">
-        <strong>Tasks</strong>
+        <strong>Group</strong>
       </div>
 
       <div class="card-body">
         <!-- search box -->
-        <input type="text" id="txtSearchTask" class="form-control mb-3" placeholder="Search task, description, or location..." aria-label="search tasks" />
+        <input type="text" id="txtSearchStudent" class="form-control mb-3" placeholder="Search task, description, or location..." aria-label="search tasks" />
         <div class="table-responsive">
           <table class="table table-bordered" id="taskTable">
             <thead class="thead-dark">
               <tr>
                 <th>Name</th>
-                <th>Description</th>
-                <th>Due</th>
-                <th>Priority</th>
-                <th>Location</th>
-                <th>Status</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Bio</th>
               </tr>
             </thead>
             <tbody id="taskList">
@@ -160,16 +163,16 @@
     }
 
     // handle form submission
-    document.getElementById('formAddTask').addEventListener('submit', function (e) {
+    document.getElementById('formAddReview').addEventListener('submit', function (e) {
       // SELECT BUTTON INSTEAD OF SUBMIT EXAMPLE
-      // document.querySelector('#btnAddTask').addEventListener('click', (e) => {
+      // document.querySelector('#btnAddReview').addEventListener('click', (e) => {
       e.preventDefault();
       console.log('form submitted'); // does this log?
 
       // collect input values
       const newTask = {
         ID: Date.now().toString(),
-        Name: document.getElementById('txtTaskName').value,
+        Name: document.getElementById('txtStudentName').value,
         Description: document.getElementById('txtTaskDescription').value,
         DueDate: document.getElementById('dtTaskDueDate').value,
         Priority: document.getElementById('txtTaskPriority').value,
@@ -194,7 +197,7 @@
               title: 'Task added!',
               text: 'Your task has been successfully added.',
             });
-            document.getElementById('formAddTask').reset();
+            document.getElementById('formAddReview').reset();
             fetchTasks();
           } else {
             // show error popup using SweetAlert2
@@ -209,7 +212,7 @@
     });
 
     // filter tasks by search input
-    document.getElementById('txtSearchTask').addEventListener('input', function () {
+    document.getElementById('txtSearchStudent').addEventListener('input', function () {
       const query = this.value.toLowerCase();
       const rows = document.querySelectorAll('#taskList tr');
 
