@@ -31,7 +31,7 @@
   <!-- <script src="https://unpkg.com/@tailwindcss/browser@4"></script> -->
 </head>
 
-<body>
+<body class="bg-light">
 
   <!-- MAIN CONTAINER -->
   <div class="container py-4">
@@ -42,8 +42,21 @@
     </div> -->
 
     <!-- PAGE HEADER -->
-    <h2 class="text-center">📝 RateMyTeam</h2>
-    <h4 class="text-center mb-3">Student Form</h4>
+    <div class="row align-items-center mb-3 text-center">
+      <div class="col text-start">
+        <h4 class="mb-0">Kyle Davis</h4>
+      </div>
+      <div class="col-auto mx-auto">
+        <h3 class="mb-0">
+          <span class="fw-bold">Student</span>
+          <span class="opacity-75 fw-light">|</span>
+          <span class="opacity-50 fw-light">RateMyTeam</span>
+        </h3>
+      </div>
+      <div class="col text-end">
+        <h4 class="mb-0">Log out</h4>
+      </div>
+    </div>
 
     <!-- Join Group FORM -->
     <div class="card shadow mb-3">
@@ -56,7 +69,7 @@
           <!-- ROW -->
           <!-- GAP -->
           <div class="row g-2 mb-2">
-            <div class="col-md-6">
+            <div class="col-md-10">
               <!-- input for group key -->
               <input id="txtGroupKey" type="text" class="form-control" placeholder="Group Key" required aria-label="input group key" />
             </div>
@@ -79,7 +92,7 @@
         <form id="formAddReview" onsubmit="return true">
           <!-- ROW -->
           <!-- GAP -->
-          <div class="row g-2 mb-2">
+          <div class="row g-2 mb-4">
             <div class="col-md-3">
               <!-- input for student name -->
               <input id="txtStudentName" type="text" class="form-control" placeholder="Student Name" required aria-label="input student name" />
@@ -96,9 +109,46 @@
           </div>
           <div class="row g-2 mb-2">
             <div class="col-md-10">
-              <!-- input for student review -->
-              <input id="txtStudentReview" type="text" class="form-control" placeholder="Enter Review" aria-label="input student review" />
+              <!-- example survey question 1 -->
+              <span>How much did your teammate contribute to the group?</span> 
+              <input id="txtSurveyQuestion1" type="text" class="form-control mt-1" placeholder="Enter Short Answer" aria-label="input short answer" />
             </div>
+          </div>
+          <div class="row g-2 mb-2">
+            <div class="col-md-10">
+              <!-- example survey question 2 -->
+              <span>Which of the following areas did your teammate do the best in? (Check all that apply)</span> 
+              <div class="ms-2">
+                <input type="checkbox" id="checkbox1" name="checkbox1" value="Communicates effectively">
+                <label for="checkbox1">Communicates effectively</label><br>
+                <input type="checkbox" id="checkbox2" name="checkbox2" value="Meets deadlines consistently">
+                <label for="vehicle2">Meets deadlines consistently</label><br>
+                <input type="checkbox" id="checkbox3" name="checkbox3" value="Contributes valuable ideas">
+                <label for="vehicle3">Contributes valuable ideas</label><br>
+                <input type="checkbox" id="checkbox4" name="checkbox4" value="Supports other team members">
+                <label for="vehicle3">Supports other team members</label><br>
+                <input type="checkbox" id="checkbox5" name="checkbox5" value="Takes initiative">
+                <label for="vehicle3">Takes initiative</label><br>
+                <input type="checkbox" id="checkbox6" name="checkbox6" value="Demonstrates reliability">
+                <label for="vehicle3">Demonstrates reliability</label><br>
+              </div>
+            </div>
+          </div>
+          <div class="row g-2 mb-2">
+            <div class="col-md-10">
+              <!-- example survey question 3 -->
+              <span>How do you rate your teammate overall</span> 
+              <select id="txtSurveyQuestion3" class="form-control mt-1" aria-label="select teammate rating">
+                <option value="" selected hidden>Choose Rating</option>
+                <option value="1">Poor</option>
+                <option value="2">Average</option>
+                <option value="3">Poor</option>
+                <option value="4">Great</option>
+                <option value="5">Excellent</option>
+              </select>
+            </div>
+          </div>
+          <div class="row g-2 mb-2">
             <div class="col-md-2">
               <!-- submit button -->
               <button type="submit" id="btnAddReview" class="btn btn-success w-100">Submit Review</button>
@@ -116,7 +166,7 @@
 
       <div class="card-body">
         <!-- search box -->
-        <input type="text" id="txtSearchStudent" class="form-control mb-3" placeholder="Search task, description, or location..." aria-label="search tasks" />
+        <input type="text" id="txtSearchStudent" class="form-control mb-3" placeholder="Search name, email, phone, or bio..." aria-label="search students" />
         <div class="table-responsive">
           <table class="table table-bordered" id="taskTable">
             <thead class="thead-dark">
@@ -129,6 +179,18 @@
             </thead>
             <tbody id="taskList">
               <!-- populated by JS -->
+              <tr>
+                <th>Kyle Davis</th>
+                <th>kldavis48@tntech.edu</th>
+                <th>931-260-2327</th>
+                <th>Computer Science Major</th>
+              </tr>
+              <tr>
+                <th>Preston Harberts</th>
+                <th>pjharberts42@tntech.edu</th>
+                <th>931-260-1234</th>
+                <th>Also Computer Science Major</th>
+              </tr>
             </tbody>
         </div>
       </div>
@@ -218,10 +280,11 @@
 
       rows.forEach(row => {
         const name = row.children[0].textContent.toLowerCase();
-        const description = row.children[1].textContent.toLowerCase();
-        const location = row.children[4].textContent.toLowerCase();
+        const email = row.children[1].textContent.toLowerCase();
+        const phone = row.children[2].textContent.toLocaleLowerCase()
+        const bio = row.children[3].textContent.toLowerCase();
 
-        const match = name.includes(query) || description.includes(query) || location.includes(query);
+        const match = name.includes(query) || email.includes(query) || phone.includes(query) || bio.includes(query);
         row.style.display = match ? '' : 'none';
       });
     });
