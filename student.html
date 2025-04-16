@@ -42,9 +42,10 @@
     </div> -->
 
     <!-- PAGE HEADER -->
+    <!-- PAGE HEADER -->
     <div class="row align-items-center mb-3 text-center">
       <div class="col text-start">
-        <h4 class="mb-0">Kyle Davis</h4>
+        <h5 id="userEmailHeader" class="mb-0"></h5>
       </div>
       <div class="col-auto mx-auto">
         <h3 class="mb-0">
@@ -54,7 +55,11 @@
         </h3>
       </div>
       <div class="col text-end">
-        <h4 class="mb-0">Log out</h4>
+        <a href="index.html" style="text-decoration: none;">
+          <h5 class="mb-0 text-primary">
+            <u>Log out</u>
+          </h5>
+        </a>
       </div>
     </div>
 
@@ -110,14 +115,14 @@
           <div class="row g-2 mb-2">
             <div class="col-md-10">
               <!-- example survey question 1 -->
-              <span>How much did your teammate contribute to the group?</span> 
+              <span>How much did your teammate contribute to the group?</span>
               <input id="txtSurveyQuestion1" type="text" class="form-control mt-1" placeholder="Enter Short Answer" aria-label="input short answer" />
             </div>
           </div>
           <div class="row g-2 mb-2">
             <div class="col-md-10">
               <!-- example survey question 2 -->
-              <span>Which of the following areas did your teammate do the best in? (Check all that apply)</span> 
+              <span>Which of the following areas did your teammate do the best in? (Check all that apply)</span>
               <div class="ms-2">
                 <input type="checkbox" id="checkbox1" name="checkbox1" value="Communicates effectively">
                 <label for="checkbox1">Communicates effectively</label><br>
@@ -137,7 +142,7 @@
           <div class="row g-2 mb-2">
             <div class="col-md-10">
               <!-- example survey question 3 -->
-              <span>How do you rate your teammate overall</span> 
+              <span>How do you rate your teammate overall</span>
               <select id="txtSurveyQuestion3" class="form-control mt-1" aria-label="select teammate rating">
                 <option value="" selected hidden>Choose Rating</option>
                 <option value="1">Poor</option>
@@ -199,81 +204,6 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    // fetch all tasks from backend
-    function fetchTasks() {
-      fetch('http://127.0.0.1:8000/tasks')
-        .then(res => res.json())
-        .then(data => {
-          const taskList = document.getElementById('taskList');
-          taskList.innerHTML = '';
-
-          // add each task to table
-          data.tasks.forEach(task => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td>${task.Name}</td>
-              <td>${task.Description}</td>
-              <td>${task.DueDate}</td>
-              <td>${task.Priority}</td>
-              <td>${task.Location}</td>
-              <td>${task.Status}</td>
-            `;
-            taskList.appendChild(row);
-          });
-        })
-        .catch(err => console.error('error fetching to-do tasks:', err));
-    }
-
-    // handle form submission
-    document.getElementById('formAddReview').addEventListener('submit', function (e) {
-      // SELECT BUTTON INSTEAD OF SUBMIT EXAMPLE
-      // document.querySelector('#btnAddReview').addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log('form submitted'); // does this log?
-
-      // collect input values
-      const newTask = {
-        ID: Date.now().toString(),
-        Name: document.getElementById('txtStudentName').value,
-        Description: document.getElementById('txtTaskDescription').value,
-        DueDate: document.getElementById('dtTaskDueDate').value,
-        Priority: document.getElementById('txtTaskPriority').value,
-        Location: document.getElementById('txtTaskLocation').value,
-        Status: document.getElementById('txtTaskStatus').value
-      };
-
-      // send new task to backend
-      fetch('http://127.0.0.1:8000/tasks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newTask)
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === 'success') {
-            // show success popup using SweetAlert2
-            Swal.fire({
-              icon: 'success',
-              title: 'Task added!',
-              text: 'Your task has been successfully added.',
-            });
-            document.getElementById('formAddReview').reset();
-            fetchTasks();
-          } else {
-            // show error popup using SweetAlert2
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'There was a problem adding the task.',
-            });
-          }
-
-        });
-    });
-
-    // filter tasks by search input
     document.getElementById('txtSearchStudent').addEventListener('input', function () {
       const query = this.value.toLowerCase();
       const rows = document.querySelectorAll('#taskList tr');
@@ -289,8 +219,12 @@
       });
     });
 
-    // load initial tasks
-    document.addEventListener('DOMContentLoaded', fetchTasks);
+    const userEmail = localStorage.getItem('userEmail');
+    if (userEmail) {
+      document.getElementById('userEmailHeader').textContent = userEmail;
+    } else {
+      document.getElementById('userEmailHeader').textContent = 'No email found';
+    }
   </script>
 
 </body>

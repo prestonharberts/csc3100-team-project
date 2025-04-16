@@ -258,7 +258,7 @@
 
       <div class="card-body">
         <!-- search box -->
-        <input type="text" id="txtSearchTable" class="form-control mb-3" placeholder="Search course, group, member, notes..." aria-label="search tasks" />
+        <input type="text" id="txtSearchGroups" class="form-control mb-3" placeholder="Search course, group, member, notes..." aria-label="search tasks" />
         <div class="table-responsive">
           <table class="table table-bordered" id="taskTable">
             <thead class="thead-dark">
@@ -293,84 +293,21 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    // fetch all tasks from backend
-    function fetchTasks() {
-      fetch('http://127.0.0.1:8000/tasks')
-        .then(res => res.json())
-        .then(data => {
-          const taskList = document.getElementById('taskList');
-          taskList.innerHTML = '';
+    document.getElementById('txtSearchGroups').addEventListener('input', function () {
+      const query = this.value.toLowerCase();
+      const rows = document.querySelectorAll('#taskList tr');
 
-          // add each task to table
-          data.tasks.forEach(task => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td>${task.Name}</td>
-              <td>${task.Description}</td>
-              <td>${task.DueDate}</td>
-              <td>${task.Priority}</td>
-              <td>${task.Location}</td>
-              <td>${task.Status}</td>
-            `;
-            taskList.appendChild(row);
-          });
-        })
-        .catch(err => console.error('error fetching to-do tasks:', err));
-    }
+      rows.forEach(row => {
+        const course = row.children[0].textContent.toLowerCase();
+        const group = row.children[1].textContent.toLowerCase();
+        const members = row.children[2].textContent.toLocaleLowerCase()
+        const evals = row.children[3].textContent.toLowerCase();
 
-    // handle form submission
-    document.getElementById('formAddTask').addEventListener('submit', function (e) {
-      // SELECT BUTTON INSTEAD OF SUBMIT EXAMPLE
-      // document.querySelector('#btnAddTask').addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log('form submitted'); // does this log?
-
-      // collect input values
-      const newTask = {
-        ID: Date.now().toString(),
-        Name: document.getElementById('txtTaskName').value,
-        Description: document.getElementById('txtTaskDescription').value,
-        DueDate: document.getElementById('dtTaskDueDate').value,
-        Priority: document.getElementById('txtTaskPriority').value,
-        Location: document.getElementById('txtTaskLocation').value,
-        Status: document.getElementById('txtTaskStatus').value
-      };
-
-      // send new task to backend
-      fetch('http://127.0.0.1:8000/tasks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newTask)
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === 'success') {
-            // show success popup using SweetAlert2
-            Swal.fire({
-              icon: 'success',
-              title: 'Task added!',
-              text: 'Your task has been successfully added.',
-            });
-            document.getElementById('formAddTask').reset();
-            fetchTasks();
-          } else {
-            // show error popup using SweetAlert2
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: 'There was a problem adding the task.',
-            });
-          }
-
-        });
+        const match = course.includes(query) || group.includes(query) || members.includes(query) || evals.includes(query);
+        row.style.display = match ? '' : 'none';
+      });
     });
 
-    // filter tasks by search input
-
-    // load initial tasks
-    document.addEventListener('DOMContentLoaded', fetchTasks);
     const userEmail = localStorage.getItem('userEmail');
     if (userEmail) {
       document.getElementById('userEmailHeader').textContent = userEmail;
