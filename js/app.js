@@ -7,6 +7,7 @@ document.querySelector('#btnLogin').addEventListener('click', () => {
   const regEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   const regPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
 
+  let strLoginType = document.querySelector("#txtLoginType").value
 
   let strEmail = document.querySelector("#txtEmailLogin").value
   strEmail = strEmail.toLowerCase()
@@ -47,6 +48,16 @@ document.querySelector('#btnLogin').addEventListener('click', () => {
       confirmButtonText: 'Close'
     })
   }
+  else {
+    if (strLoginType == 'Student login') {
+      localStorage.setItem('userEmail', strEmail);
+      window.location.href = 'student.html';
+    }
+    else if (strLoginType == 'Faculty login') {
+      localStorage.setItem('userEmail', strEmail);
+      window.location.href = 'faculty.html';
+    }
+  }
 })
 
 // user register authentication
@@ -54,6 +65,8 @@ document.querySelector('#btnLogin').addEventListener('click', () => {
 document.querySelector('#btnRegister').addEventListener('click', () => {
   let strErrorMessage = ""
   let strErrorRequired = ""
+
+  let strRegisterType = document.querySelector("#txtRegisterType").value
 
   const regEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
   const regPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
@@ -135,6 +148,17 @@ document.querySelector('#btnRegister').addEventListener('click', () => {
       confirmButtonText: 'Close'
     })
   }
+  else {
+    if (strRegisterType == 'Student account') {
+      localStorage.setItem('userEmail', strEmail);
+      window.location.href = 'student.html';
+    }
+    else if (strRegisterType == 'Faculty account') {
+      localStorage.setItem('userEmail', strEmail);
+      window.location.href = 'faculty.html';
+    }
+  }
+
 })
 
 // jQuery

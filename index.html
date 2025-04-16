@@ -4,25 +4,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SwollenHippo</title>
+  <title>RateMyTeam</title>
   <!-- BOOTSWATCH THEME: PULSE -->
   <link href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/pulse/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-image: url("./img/wallpaper.webp");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-color: rgba(0, 20, 100, 0.5);
+      /* semi-transparent black overlay */
+      background-blend-mode: overlay;
+    }
+  </style>
+
 </head>
 
-<body class="bg-dark">
-  <div class="d-flex justify-content-center align-items-center">
-    <!-- LOGIN CARD -->
+<body>
+  <!-- LOGIN CARD -->
+  <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center py-7" style="padding-top: 5rem; padding-bottom: 5rem;">
     <form class="card col-12 col-md-5 col-lg-4" id="frmLogin">
       <div class="card-body">
-        <h1 class="text-center mb-0 text-primary">SwollenHippo</h1>
-        <h3 class="text-center mt-3 mb-0 text-dark">Electronic Medical Records Form</h3>
+        <h1 class="text-center mb-0 text-primary">RateMyTeam</h1>
+        <h3 class="text-center mt-3 mb-0 text-dark">Team Management Solution</h3>
         <div class="d-flex justify-content-center">
           <!-- IMAGE -->
           <img src="./img/login-image.svg" alt="computer monitor image" style="max-width: 80%;" class="mt-2 mb-2">
         </div>
         <!-- LOGIN DETAILS -->
         <h4 class="text-center mb-0 text-dark">Account Login</h4>
-        <input id="txtEmailLogin" class="form-control mt-4" type="email" placeholder="Email" aria-label="email input">
+        <select id="txtLoginType" class="form-control mt-4" aria-label="select login type">
+          <option value="Student login" selected>Student login</option>
+          <option value="Faculty login">Faculty login</option>
+        </select>
+        <input id="txtEmailLogin" class="form-control mt-2" type="email" placeholder="Email" aria-label="email input">
         <input id="txtPasswordLogin" class="form-control mt-2" type="password" placeholder="Password" aria-label="password input">
         <button class="btn btn-primary col-12 mt-4" type="button" id="btnLogin">Log In</button>
         <button class="btn btn-link col-12 mt-4" type="button" id="btnSwapLogin">Need an account? Create one here</button>
@@ -31,8 +46,8 @@
     <!-- REGISTER CARD -->
     <form class="card col-12 col-md-5 col-lg-4" id="frmRegister" style="display: none;">
       <div class="card-body">
-        <h1 class="text-center mb-0 text-primary">SwollenHippo</h1>
-        <h3 class="text-center mt-3 mb-0 text-dark">Electronic Medical Records Form</h3>
+        <h1 class="text-center mb-0 text-primary">RateMyTeam</h1>
+        <h3 class="text-center mt-3 mb-0 text-dark">Team Management Solution</h3>
         <div class="d-flex justify-content-center">
           <!-- IMAGE -->
           <img src="./img/register-image.svg" alt="computer monitor image" style="max-width: 80%;" class="mt-2 mb-2">
@@ -40,6 +55,10 @@
         <!-- REGISTER DETAILS -->
         <h4 class="text-center mb-4 text-dark">Create Account</h4>
         <h5 class=" text-dark">Account Information</h5>
+        <select id="txtRegisterType" class="form-control mt-4" aria-label="select register type">
+          <option value="Student account" selected>Student account</option>
+          <option value="Faculty account">Faculty account</option>
+        </select>
         <input id="txtEmailRegister" class="form-control mt-2" type="email" placeholder="Email" aria-label="email input required">
         <input id="txtPasswordRegister" class="form-control mt-2" type="password" placeholder="Password" aria-label="password input required">
         <input id="txtPasswordConfirm" class="form-control mt-2" type="password" placeholder="Confirm Password" aria-label="confirm password input required">

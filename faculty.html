@@ -13,7 +13,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:,">
   <!-- PAGE TITLE -->
-  <title>Faculty – Rate-my-Group</title>
+  <title>Faculty – RateMyTeam</title>
   <!-- CSS STYLESHEETS -->
   <link rel="stylesheet" href="css/lib/bootstrap.min.css" />
   <link rel="stylesheet" href="css/lib/sweetalert2.min.css" />
@@ -24,7 +24,7 @@
   <script src="js/lib/sweetalert2.all.min.js"></script>
 </head>
 
-<body>
+<body class="bg-light">
 
   <!-- MAIN CONTAINER -->
   <div class="container py-4">
@@ -37,17 +37,21 @@
     <!-- PAGE HEADER -->
     <div class="row align-items-center mb-3 text-center">
       <div class="col text-start">
-        <h4 class="mb-0">Benjamin Burchfield</h4>
+        <h5 id="userEmailHeader" class="mb-0"></h5>
       </div>
       <div class="col-auto mx-auto">
         <h3 class="mb-0">
           <span class="fw-bold">Faculty</span>
           <span class="opacity-75 fw-light">|</span>
-          <span class="opacity-50 fw-light">Rate-my-Group</span>
+          <span class="opacity-50 fw-light">RateMyTeam</span>
         </h3>
       </div>
       <div class="col text-end">
-        <h4 class="mb-0">Log out</h4>
+        <a href="index.html" style="text-decoration: none;">
+          <h5 class="mb-0 text-primary">
+            <u>Log out</u>
+          </h5>
+        </a>
       </div>
     </div>
 
@@ -59,51 +63,51 @@
         <div class="card-header bg-success text-light">
           <h2 class="mb-0">
             <button class="btn text-light w-100 text-start collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSurvey" aria-expanded="true" aria-controls="collapseSurvey">
-              Create Survey
+              <b>Create Survey</b>
             </button>
           </h2>
         </div>
         <div id="collapseSurvey" class="accordion-collapse collapse" data-bs-parent="#formAccordion">
           <div class="card-body">
-            <form id="formAddTask" onsubmit="return true">
+            <form id="formAddSurvey" onsubmit="return true">
               <!-- ROW -->
               <!-- GAP -->
               <div class="row g-2 mb-2">
                 <div class="col-md-6">
-                  <!-- input for task name -->
-                  <select id="txtTaskName" class="form-control" aria-label="select task priority">
-                    <option value="Low" selected hidden>Select recipient group</option>
-                    <option value="Low">All groups</option>
-                    <option value="Medium">Group 1 (Preston, Kyle)</option>
-                    <option value="High">Group 2 (Ezra, Javontae)</option>
+                  <!-- input for survey recipient group -->
+                  <select id="surveyRecipientGroup" class="form-control" aria-label="select recipient group">
+                    <option value="" selected hidden>Select recipient group</option>
+                    <option value="All groups">All groups</option>
+                    <option value="Group 1">Group 1 (Preston, Kyle)</option>
+                    <option value="Group 2">Group 2 (Ezra, Javontae)</option>
                   </select>
                 </div>
                 <div class="col-md-6">
-                  <!-- input for task description -->
-                  <input id="txtTaskDescription" type="text" class="form-control" placeholder="Enter survey title" aria-label="input task description" />
+                  <!-- input for survey title -->
+                  <input id="surveyTitle" type="text" class="form-control" placeholder="Enter survey title" aria-label="input survey title" />
                 </div>
               </div>
               <div class="row g-2 mb-2">
                 <div class="col-md-2">
-                  <!-- input for due date -->
-                  <input id="dtTaskDueDate" type="date" class="form-control" required aria-label="input due date" />
+                  <!-- input for survey due date -->
+                  <input id="surveyDueDate" type="date" class="form-control" required aria-label="input due date" />
                 </div>
                 <div class="col-md-4">
-                  <!-- input for location -->
-                  <select id="txtTaskLocation" class="form-control" aria-label="select task priority">
-                    <option value="Low" selected hidden>Require faculty review</option>
-                    <option value="Low">Yes (wait to release results)</option>
-                    <option value="Medium">No (release results upon completion)</option>
-                    <option value="High">Do not release any results</option>
+                  <!-- input for faculty review requirement -->
+                  <select id="txtFacultyReviewRequirement" class="form-control" aria-label="select review requirement">
+                    <option value="" selected hidden>Require faculty review</option>
+                    <option value="Yes">Yes (wait to release results)</option>
+                    <option value="No">No (release results upon completion)</option>
+                    <option value="No results">Do not release any results</option>
                   </select>
                 </div>
                 <div class="col-md-4">
-                  <!-- input for priority -->
-                  <input id="txtTaskPriority" type="text" class="form-control" placeholder="Number of questions" aria-label="input task description" />
+                  <!-- input for number of survey questions -->
+                  <input id="txtSurveyQuestionCount" type="text" class="form-control" placeholder="Number of questions" aria-label="input question count" />
                 </div>
                 <div class="col-md-2">
                   <!-- submit button -->
-                  <button type="submit" id="btnAddTask" class="btn btn-success w-100">Create Survey</button>
+                  <button type="submit" id="btnCreateSurvey" class="btn btn-success w-100">Create Survey</button>
                 </div>
               </div>
             </form>
@@ -116,7 +120,7 @@
         <div class="card-header bg-success text-light">
           <h2 class="mb-0">
             <button class="btn text-light w-100 text-start collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGroup" aria-expanded="false" aria-controls="collapseGroup">
-              Create Group
+              <b>Create Group</b>
             </button>
           </h2>
         </div>
@@ -131,8 +135,6 @@
                   <select id="assignCourse" class="form-control" aria-label="Select course">
                     <option value="" selected hidden>Select course</option>
                     <option value="csc3100">CSC 3100</option>
-                    <option value="eng2025">ENG 2025</option>
-                    <option value="mth1200">MTH 1200</option>
                   </select>
                 </div>
                 <div class="col-md-4">
@@ -168,7 +170,7 @@
         <div class="card-header bg-success text-light">
           <h2 class="mb-0">
             <button class="btn text-light w-100 text-start collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCourse" aria-expanded="false" aria-controls="collapseCourse">
-              Create Course
+              <b>Create Course</b>
             </button>
           </h2>
         </div>
@@ -221,7 +223,7 @@
     <!-- SURVEY RESULTS TABLE -->
     <div class="card shadow mb-3">
       <div class="card-header bg-primary text-light">
-        <strong>Survey Results</strong>
+        <b>Survey Results</b>
       </div>
 
       <div class="card-body">
@@ -251,12 +253,12 @@
     <!-- GROUP LIST TABLE -->
     <div class="card shadow">
       <div class="card-header bg-primary text-light">
-        <strong>Group List</strong>
+        <b>Group List</b>
       </div>
 
       <div class="card-body">
         <!-- search box -->
-        <input type="text" id="txtSearchTask" class="form-control mb-3" placeholder="Search course, group, member..." aria-label="search tasks" />
+        <input type="text" id="txtSearchTable" class="form-control mb-3" placeholder="Search course, group, member, notes..." aria-label="search tasks" />
         <div class="table-responsive">
           <table class="table table-bordered" id="taskTable">
             <thead class="thead-dark">
@@ -273,14 +275,14 @@
                 <td>CSC 3100-001</td>
                 <td>Group 1</td>
                 <td>Preston, Kyle</td>
-                <td>3 submitted <span class="text-primary">(details)</span></td>
+                <td>3 submitted, 1 not finished <span class="text-primary">(details)</span></td>
                 <td>Deserve an A for current project</td>
               </tr>
               <tr>
                 <td>CSC 3100-001</td>
                 <td>Group 2</td>
                 <td>Ezra, Javontae</td>
-                <td>3 submitted <span class="text-primary">(details)</span></td>
+                <td>3 submitted, 1 not finished <span class="text-primary">(details)</span></td>
                 <td>Should use Vim to boost productivity</td>
               </tr>
             </tbody>
@@ -366,22 +368,16 @@
     });
 
     // filter tasks by search input
-    document.getElementById('txtSearchTask').addEventListener('input', function () {
-      const query = this.value.toLowerCase();
-      const rows = document.querySelectorAll('#taskList tr');
-
-      rows.forEach(row => {
-        const name = row.children[0].textContent.toLowerCase();
-        const description = row.children[1].textContent.toLowerCase();
-        const location = row.children[4].textContent.toLowerCase();
-
-        const match = name.includes(query) || description.includes(query) || location.includes(query);
-        row.style.display = match ? '' : 'none';
-      });
-    });
 
     // load initial tasks
     document.addEventListener('DOMContentLoaded', fetchTasks);
+    const userEmail = localStorage.getItem('userEmail');
+    if (userEmail) {
+      document.getElementById('userEmailHeader').textContent = userEmail;
+    } else {
+      document.getElementById('userEmailHeader').textContent = 'No email found';
+    }
+
   </script>
 
 </body>
